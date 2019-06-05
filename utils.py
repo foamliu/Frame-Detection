@@ -54,7 +54,7 @@ def do_match(file1, file2):
 
         img3 = cv.drawMatches(img1, kp1, img2, kp2, good, None, **draw_params)
 
-        plt.imshow(img3, 'gray'), \
+        plt.imshow(img3, 'gray')
         plt.show()
 
     return None
