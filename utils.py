@@ -2,7 +2,7 @@ import os
 
 import cv2 as cv
 import numpy as np
-from matplotlib import pyplot as plt
+
 from config import MIN_MATCH_COUNT
 
 # Initiate SIFT detector
@@ -19,10 +19,17 @@ def ensure_folder(folder):
         os.mkdir(folder)
 
 
+def draw_bboxes(img, points):
+    for p in points:
+        cv.circle(img, (int(p[0]), int(p[1])), 1, (0, 255, 0), -1)
+
+    return img
+
+
 def do_match(file1, file2):
     img1 = cv.imread(file1, 0)
     img2 = cv.imread(file2, 0)
-    assert(img1.shape == img2.shape)
+    assert (img1.shape == img2.shape)
 
     h, w = img1.shape[:2]
 
@@ -52,7 +59,11 @@ def do_match(file1, file2):
         pts = [[0, 0], [0, h - 1], [w - 1, h - 1], [w - 1, 0]]
         pts = np.array(pts, dtype=np.float32).reshape((-1, 1, 2))
         dst = cv.perspectiveTransform(pts, H)
-        print(dst)
+        print('dst.shape: ' + str(dst.shape))
+        print('dst: ' + str(dst))
 
+        img = draw_bboxes(img2, dst)
+        cv.imshow('', img)
+        cv.waitKey(0)
 
     return None
