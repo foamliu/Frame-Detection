@@ -11,6 +11,7 @@ if __name__ == "__main__":
     ensure_folder(DATA_DIR)
     data = []
     dir_list = [d for d in os.listdir(IMG_DIR) if os.path.isdir(os.path.join(IMG_DIR, d))]
+    print('Collecting files...')
     for dir in tqdm(dir_list):
         dir_path = os.path.join(IMG_DIR, dir)
         file_list = [f for f in os.listdir(dir_path) if f.lower().endswith('.jpg')]
@@ -27,7 +28,8 @@ if __name__ == "__main__":
     not_sample = [item for item in data if not item['is_sample']]
     print('len(not_sample): ' + str(len(not_sample)))
 
-    for item in not_sample:
+    print('Calculating 4 bounding points...')
+    for item in tqdm(not_sample):
         fullpath = item['fullpath']
         file = item['file']
         sample = fullpath.replace(file, '0.jpg')
