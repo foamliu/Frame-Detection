@@ -33,8 +33,8 @@ def do_match(file1, file2):
 
     h, w = img1.shape[:2]
 
-    print('img1.shape: ' + str(img1.shape))
-    print('img2.shape: ' + str(img1.shape))
+    # print('img1.shape: ' + str(img1.shape))
+    # print('img2.shape: ' + str(img1.shape))
 
     # find the keypoints and descriptors with SIFT
     kp1, des1 = sift.detectAndCompute(img1, None)
@@ -48,7 +48,7 @@ def do_match(file1, file2):
         if m.distance < 0.7 * n.distance:
             good.append(m)
 
-    print('len(good): ' + str(len(good)))
+    # print('len(good): ' + str(len(good)))
 
     if len(good) > MIN_MATCH_COUNT:
         src_pts = np.float32([kp1[m.queryIdx].pt for m in good]).reshape(-1, 1, 2)
