@@ -62,7 +62,8 @@ def do_match(file1, file2):
         print('dst.shape: ' + str(dst.shape))
         print('dst: ' + str(dst))
 
-        img = draw_bboxes(img2, dst)
+        img = cv.imread(file2)
+        img = draw_bboxes(img, dst)
         cv.imshow('', img)
         cv.waitKey(0)
 
