@@ -35,8 +35,8 @@ if __name__ == "__main__":
         sample = fullpath.replace(file, '0.jpg')
         # print('fullpath: ' + fullpath)
         # print('sample: ' + sample)
-        dst = do_match(sample, fullpath)
-        item['pts'] = dst.tolist()
+        pts = do_match(sample, fullpath)
+        item['pts'] = pts.tolist()
 
     with open('data/data.pkl', 'wb') as file:
         pickle.dump(data, file)

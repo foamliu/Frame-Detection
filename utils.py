@@ -50,15 +50,18 @@ def do_match(file1, file2):
 
     # print('len(good): ' + str(len(good)))
 
+    result = None
+
     if len(good) > MIN_MATCH_COUNT:
         src_pts = np.float32([kp1[m.queryIdx].pt for m in good]).reshape(-1, 1, 2)
         dst_pts = np.float32([kp2[m.trainIdx].pt for m in good]).reshape(-1, 1, 2)
 
         H, mask = cv.findHomography(src_pts, dst_pts, cv.RANSAC, 5.0)
         # print('H: ' + str(H))
-        pts = [[0, 0], [0, h - 1], [w - 1, h - 1], [w - 1, 0]]
-        pts = np.array(pts, dtype=np.float32).reshape((-1, 1, 2))
-        dst = cv.perspectiveTransform(pts, H)
+        src = [[0, 0], [0, h - 1], [w - 1, h - 1], [w - 1, 0]]
+        src = np.array(src, dtype=np.float32).reshape((-1, 1, 2))
+        dst = cv.perspectiveTransform(src, H)
+        result = dst
         # print('dst.shape: ' + str(dst.shape))
         # print('dst: ' + str(dst))
 
@@ -67,4 +70,4 @@ def do_match(file1, file2):
         # cv.imshow('', img)
         # cv.waitKey(0)
 
-    return dst
+    return result
