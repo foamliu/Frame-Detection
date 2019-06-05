@@ -2,7 +2,7 @@ import os
 
 import cv2 as cv
 import numpy as np
-
+from matplotlib import pyplot as plt
 from config import MIN_MATCH_COUNT
 
 # Initiate SIFT detector
@@ -46,5 +46,15 @@ def do_match(file1, file2):
 
         H, mask = cv.findHomography(src_pts, dst_pts, cv.RANSAC, 5.0)
         print(H)
+
+        draw_params = dict(matchColor=(0, 255, 0),  # draw matches in green color
+                           singlePointColor=None,
+                           matchesMask=mask,  # draw only inliers
+                           flags=2)
+
+        img3 = cv.drawMatches(img1, kp1, img2, kp2, good, None, **draw_params)
+
+        plt.imshow(img3, 'gray'), \
+        plt.show()
 
     return None
