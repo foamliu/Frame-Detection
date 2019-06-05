@@ -36,7 +36,7 @@ if __name__ == "__main__":
         # print('fullpath: ' + fullpath)
         # print('sample: ' + sample)
         pts = do_match(sample, fullpath)
-        item['pts'] = pts.tolist()
+        item['pts'] = pts
 
     with open('data/data.pkl', 'wb') as file:
         pickle.dump(data, file)

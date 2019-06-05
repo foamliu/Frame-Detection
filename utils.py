@@ -61,7 +61,7 @@ def do_match(file1, file2):
         src = [[0, 0], [0, h - 1], [w - 1, h - 1], [w - 1, 0]]
         src = np.array(src, dtype=np.float32).reshape((-1, 1, 2))
         dst = cv.perspectiveTransform(src, H)
-        result = dst
+        result = dst.tolist()
         # print('dst.shape: ' + str(dst.shape))
         # print('dst: ' + str(dst))
 
