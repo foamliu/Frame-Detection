@@ -23,10 +23,10 @@ if __name__ == "__main__":
     file_count = len(data)
     print('file_count: ' + str(file_count))
 
-    file_list = [item for item in data if not item['is_sample']]
-    print('len(file_list): ' + str(len(file_list)))
+    not_sample = [item for item in data if not item['is_sample']]
+    print('len(not_sample): ' + str(len(not_sample)))
 
-    for item in data:
+    for item in not_sample:
         fullpath = item['fullpath']
         file = item['file']
         sample = fullpath.replace(file, '0.jpg')
