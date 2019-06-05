@@ -22,6 +22,9 @@ def ensure_folder(folder):
 def do_match(file1, file2):
     img1 = cv.imread(file1, 0)
     img2 = cv.imread(file2, 0)
+    assert(img1.shape == img2.shape)
+
+    h, w = img1.shape[:2]
 
     print('img1.shape: ' + str(img1.shape))
     print('img2.shape: ' + str(img1.shape))
@@ -46,8 +49,9 @@ def do_match(file1, file2):
 
         H, mask = cv.findHomography(src_pts, dst_pts, cv.RANSAC, 5.0)
         print(H)
-        src = np.zeros((1, 2))
-        dst = cv.perspectiveTransform(src, H)
+        pts = [[0, 0], [0, h - 1], [w - 1, h - 1], [w - 1, 0]]
+        pts = np.array(pts, dtype=np.float32).reshape((-1, 1, 2))
+        dst = cv.perspectiveTransform(pts, H)
         print(dst)
 
 
