@@ -22,6 +22,10 @@ def ensure_folder(folder):
 def do_match(file1, file2):
     img1 = cv.imread(file1, 0)
     img2 = cv.imread(file2, 0)
+
+    print('img1.shape: ' + str(img1.shape))
+    print('img2.shape: ' + str(img1.shape))
+
     # find the keypoints and descriptors with SIFT
     kp1, des1 = sift.detectAndCompute(img1, None)
     kp2, des2 = sift.detectAndCompute(img2, None)
