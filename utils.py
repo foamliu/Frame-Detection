@@ -38,11 +38,11 @@ def do_match(file1, file2):
         if m.distance < 0.7 * n.distance:
             good.append(m)
 
+    print('len(good): ' + str(len(good)))
+
     if len(good) > MIN_MATCH_COUNT:
         src_pts = np.float32([kp1[m.queryIdx].pt for m in good]).reshape(-1, 1, 2)
         dst_pts = np.float32([kp2[m.trainIdx].pt for m in good]).reshape(-1, 1, 2)
-
-        np.savez('pts.npz', src_pts=src_pts, dst_pts=dst_pts)
 
         H, mask = cv.findHomography(src_pts, dst_pts, cv.RANSAC, 5.0)
         print(H)
