@@ -22,3 +22,15 @@ if __name__ == "__main__":
 
     file_count = len(data)
     print('file_count: ' + str(file_count))
+
+    file_list = [item for item in data if not item['is_sample']]
+    print('len(file_list): ' + str(len(file_list)))
+
+    for item in data:
+        fullpath = item['fullpath']
+        file = item['file']
+        sample = fullpath.replace(file, '0.jpg')
+        print('fullpath: ' + fullpath)
+        print('sample: ' + sample)
+        break
+
