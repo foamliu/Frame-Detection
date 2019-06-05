@@ -21,3 +21,4 @@ if __name__ == "__main__":
         json.dump(data, file, ensure_ascii=False, indent=4)
 
     file_count = len(data)
+    print('file_count: ' + str(file_count))
