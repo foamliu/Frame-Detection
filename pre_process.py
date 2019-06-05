@@ -32,6 +32,5 @@ if __name__ == "__main__":
         sample = fullpath.replace(file, '0.jpg')
         print('fullpath: ' + fullpath)
         print('sample: ' + sample)
-        do_match(sample, fullpath)
-        break
-
+        dst = do_match(sample, fullpath)
+        item['pts'] = dst.tolist()

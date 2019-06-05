@@ -55,16 +55,16 @@ def do_match(file1, file2):
         dst_pts = np.float32([kp2[m.trainIdx].pt for m in good]).reshape(-1, 1, 2)
 
         H, mask = cv.findHomography(src_pts, dst_pts, cv.RANSAC, 5.0)
-        print('H: ' + str(H))
+        # print('H: ' + str(H))
         pts = [[0, 0], [0, h - 1], [w - 1, h - 1], [w - 1, 0]]
         pts = np.array(pts, dtype=np.float32).reshape((-1, 1, 2))
         dst = cv.perspectiveTransform(pts, H)
-        print('dst.shape: ' + str(dst.shape))
-        print('dst: ' + str(dst))
+        # print('dst.shape: ' + str(dst.shape))
+        # print('dst: ' + str(dst))
 
-        img = cv.imread(file2)
-        img = draw_bboxes(img, dst)
-        cv.imshow('', img)
-        cv.waitKey(0)
+        # img = cv.imread(file2)
+        # img = draw_bboxes(img, dst)
+        # cv.imshow('', img)
+        # cv.waitKey(0)
 
-    return None
+    return dst
