@@ -1,6 +1,46 @@
 import os
 
+import cv2 as cv
+import numpy as np
+
+from config import MIN_MATCH_COUNT
+
+# Initiate SIFT detector
+sift = cv.xfeatures2d.SIFT_create()
+FLANN_INDEX_KDTREE = 0
+index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)
+search_params = dict(checks=50)
+
+flann = cv.FlannBasedMatcher(index_params, search_params)
+
 
 def ensure_folder(folder):
     if not os.path.isdir(folder):
         os.mkdir(folder)
+
+
+def do_match(file1, file2):
+    img1 = cv.imread(file1, 0)
+    img2 = cv.imread(file2, 0)
+    # find the keypoints and descriptors with SIFT
+    kp1, des1 = sift.detectAndCompute(img1, None)
+    kp2, des2 = sift.detectAndCompute(img2, None)
+
+    matches = flann.knnMatch(des1, des2, k=2)
+
+    # store all the good matches as per Lowe's ratio test.
+    good = []
+    for m, n in matches:
+        if m.distance < 0.7 * n.distance:
+            good.append(m)
+
+    if len(good) > MIN_MATCH_COUNT:
+        src_pts = np.float32([kp1[m.queryIdx].pt for m in good]).reshape(-1, 1, 2)
+        dst_pts = np.float32([kp2[m.trainIdx].pt for m in good]).reshape(-1, 1, 2)
+
+        np.savez('pts.npz', src_pts=src_pts, dst_pts=dst_pts)
+
+        H, mask = cv.findHomography(src_pts, dst_pts, cv.RANSAC, 5.0)
+        print(H)
+
+    return None

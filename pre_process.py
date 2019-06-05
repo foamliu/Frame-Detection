@@ -4,7 +4,7 @@ import os
 from tqdm import tqdm
 
 from config import DATA_DIR, IMG_DIR
-from utils import ensure_folder
+from utils import ensure_folder, do_match
 
 if __name__ == "__main__":
     ensure_folder(DATA_DIR)
@@ -32,5 +32,6 @@ if __name__ == "__main__":
         sample = fullpath.replace(file, '0.jpg')
         print('fullpath: ' + fullpath)
         print('sample: ' + sample)
+        do_match(sample, fullpath)
         break
 

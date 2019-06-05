@@ -19,3 +19,4 @@ num_tests = 10000
 DATA_DIR = 'data'
 IMG_DIR = '../Image-Matching/data/cron20190326_resized/'
 
+MIN_MATCH_COUNT = 10
