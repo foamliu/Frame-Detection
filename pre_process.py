@@ -1,5 +1,6 @@
 import json
 import os
+import pickle
 
 from tqdm import tqdm
 
@@ -30,7 +31,10 @@ if __name__ == "__main__":
         fullpath = item['fullpath']
         file = item['file']
         sample = fullpath.replace(file, '0.jpg')
-        print('fullpath: ' + fullpath)
-        print('sample: ' + sample)
+        # print('fullpath: ' + fullpath)
+        # print('sample: ' + sample)
         dst = do_match(sample, fullpath)
         item['pts'] = dst.tolist()
+
+    with open('data/data.pkl', 'wb') as file:
+        pickle.dump(data, file)
