@@ -21,7 +21,7 @@ def ensure_folder(folder):
 
 def draw_bboxes(img, points):
     for p in points:
-        cv.circle(img, (int(p[0]), int(p[1])), 1, (0, 255, 0), -1)
+        cv.circle(img, (int(p[0][0]), int(p[0][1])), 1, (0, 255, 0), -1)
 
     return img
 
