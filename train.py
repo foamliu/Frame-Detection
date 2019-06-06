@@ -51,12 +51,8 @@ def train_net(args):
     valid_dataset = FrameDetectionDataset('valid')
     valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=args.batch_size, shuffle=False, num_workers=4)
 
-    # scheduler = StepLR(optimizer, step_size=args.lr_step, gamma=0.1)
-
     # Epochs
     for epoch in range(start_epoch, args.end_epoch):
-        # scheduler.step()
-
         # One epoch's training
         train_loss = train(train_loader=train_loader,
                            model=model,

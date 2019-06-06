@@ -47,6 +47,7 @@ class FrameDetectionDataset(Dataset):
         pts = np.array(sample['pts'])
         pts = pts.reshape((8, ))
         pts = pts / im_size
+        pts = np.clip(pts, 0, 1)
 
         return img, pts
 
