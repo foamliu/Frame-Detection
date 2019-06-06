@@ -37,8 +37,8 @@ class FrameDetectionDataset(Dataset):
 
     def __getitem__(self, i):
         sample = self.samples[i]
-        full_path = sample['full_path']
-        img = cv.imread(full_path)
+        fullpath = sample['fullpath']
+        img = cv.imread(fullpath)
         img = cv.resize(img, (im_size, im_size))
         img = img[..., ::-1]  # RGB
         img = transforms.ToPILImage()(img)
