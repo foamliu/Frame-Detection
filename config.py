@@ -12,6 +12,7 @@ grad_clip = 5.  # clip gradients at an absolute value of
 print_freq = 100  # print training/validation stats  every __ batches
 checkpoint = None  # path to checkpoint, None if none
 MIN_MATCH_COUNT = 10
+loss_ratio = im_size
 
 # Data parameters
 num_samples = 357937  # before filtering: 373471

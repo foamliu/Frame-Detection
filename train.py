@@ -3,7 +3,7 @@ import torch
 from tensorboardX import SummaryWriter
 from torch import nn
 
-from config import device, grad_clip, print_freq
+from config import device, grad_clip, print_freq, loss_ratio
 from data_gen import FrameDetectionDataset
 from models import FrameDetectionModel
 from utils import parse_args, save_checkpoint, AverageMeter, clip_gradient, get_logger
@@ -43,7 +43,7 @@ def train_net(args):
     model = model.to(device)
 
     # Loss function
-    criterion = nn.MSELoss().to(device)
+    criterion = nn.L1Loss().to(device)
 
     # Custom dataloaders
     train_dataset = FrameDetectionDataset('train')
@@ -100,6 +100,7 @@ def train(train_loader, model, criterion, optimizer, epoch, logger):
 
         # Calculate loss
         loss = criterion(output, label)
+        loss = loss * loss_ratio
 
         # Back prop.
         optimizer.zero_grad()
@@ -139,6 +140,7 @@ def valid(valid_loader, model, criterion, logger):
 
         # Calculate loss
         loss = criterion(output, label)
+        loss = loss * loss_ratio
 
         # Keep track of metrics
         losses.update(loss.item())
