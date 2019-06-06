@@ -11,12 +11,13 @@ num_workers = 1  # for data-loading; right now, only 1 works with h5py
 grad_clip = 5.  # clip gradients at an absolute value of
 print_freq = 100  # print training/validation stats  every __ batches
 checkpoint = None  # path to checkpoint, None if none
+MIN_MATCH_COUNT = 10
 
 # Data parameters
-num_classes = 9935
-num_samples = 357646  # before filtering: 373471
+num_samples = 357937  # before filtering: 373471
 num_tests = 10000
+num_train = num_samples - num_tests
 DATA_DIR = 'data'
 IMG_DIR = '../Image-Matching/data/cron20190326_resized/'
 
-MIN_MATCH_COUNT = 10
+pickle_file = 'data/data.pkl'
