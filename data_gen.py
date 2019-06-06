@@ -1,10 +1,10 @@
 import pickle
-
+import numpy as np
 import cv2 as cv
 from torch.utils.data import Dataset
 from torchvision import transforms
 
-from config import im_size, pickle_file
+from config import im_size, pickle_file, num_train
 
 # Data augmentation and normalization for training
 # Just normalization for validation
@@ -38,33 +38,22 @@ class FrameDetectionDataset(Dataset):
     def __getitem__(self, i):
         sample = self.samples[i]
         full_path = sample['full_path']
-        bbox = sample['bboxes'][0]
         img = cv.imread(full_path)
-        img = crop_image(img, bbox)
         img = cv.resize(img, (im_size, im_size))
         img = img[..., ::-1]  # RGB
         img = transforms.ToPILImage()(img)
         img = self.transformer(img)
 
-        # age = sample['attr']['age'] / 100.
-        # pitch = (sample['attr']['angle']['pitch'] + 180) / 360
-        # roll = (sample['attr']['angle']['roll'] + 180) / 360
-        # yaw = (sample['attr']['angle']['yaw'] + 180) / 360
-        beauty = sample['attr']['beauty'] / 100.
-        # expression = name2idx(sample['attr']['expression']['type'])
-        # face_prob = sample['attr']['face_probability']
-        # face_shape = name2idx(sample['attr']['face_shape']['type'])
-        # face_type = name2idx(sample['attr']['face_type']['type'])
-        # gender = name2idx(sample['attr']['gender']['type'])
-        # glasses = name2idx(sample['attr']['glasses']['type'])
-        # race = name2idx(sample['attr']['race']['type'])
-        # return img, (age, pitch, roll, yaw, beauty, expression, face_prob, face_shape, face_type, gender, glasses, race)
-        return img, (beauty)
+        pts = np.array(sample['pts'])
+        pts = pts.reshape((4, 2))
+        pts = pts / im_size
+
+        return img, pts
 
     def __len__(self):
         return len(self.samples)
 
 
 if __name__ == "__main__":
-    dataset = FaceAttributesDataset('train')
+    dataset = FrameDetectionDataset('train')
     print(dataset[0])
