@@ -100,7 +100,7 @@ def train(train_loader, model, criterion, optimizer, epoch, logger):
         label = label.type(torch.FloatTensor).to(device)  # [N, 8]
 
         # Forward prop.
-        output = model(img)  # embedding => [N, 512]
+        output = model(img)  # embedding => [N, 8]
 
         # Calculate loss
         loss = criterion(output, label)
@@ -139,7 +139,7 @@ def valid(valid_loader, model, criterion, logger):
         label = label.type(torch.FloatTensor).to(device)  # [N, 8]
 
         # Forward prop.
-        output = model(img)  # embedding => [N, 512]
+        output = model(img)  # embedding => [N, 8]
 
         # Calculate loss
         loss = criterion(output, label)
