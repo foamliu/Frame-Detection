@@ -2,6 +2,7 @@ import json
 import os
 import pickle
 
+import cv2 as cv
 from tqdm import tqdm
 
 from config import DATA_DIR, IMG_DIR
@@ -35,7 +36,11 @@ if __name__ == "__main__":
         sample = fullpath.replace(file, '0.jpg')
         # print('fullpath: ' + fullpath)
         # print('sample: ' + sample)
-        pts = do_match(sample, fullpath)
+        try:
+            pts = do_match(sample, fullpath)
+        except cv.error:
+            pts = None
+
         item['pts'] = pts
 
     with open('data/data.pkl', 'wb') as file:
