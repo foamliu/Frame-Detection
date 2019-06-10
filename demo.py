@@ -2,6 +2,7 @@ import pickle
 import random
 
 import cv2 as cv
+import numpy as np
 import torch
 from torchvision import transforms
 
@@ -47,5 +48,11 @@ if __name__ == "__main__":
 
     for i in range(10):
         output = outputs[i].cpu().numpy()
+        output = np.reshape(output, (4, 1, 2))
+        output = output * im_size
         print('output: ' + str(output))
         print('output.shape: ' + str(output.shape))
+
+        img = cv.imread('images/{}_img.jpg'.format(i))
+        img = draw_bboxes(img, output)
+        cv.imwrite('images/{}_out.jpg'.format(i), img)
