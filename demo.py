@@ -36,7 +36,8 @@ if __name__ == "__main__":
         img = transformer(img)
         imgs[i] = img
 
-    outputs = model(imgs)
+    with torch.no_grad():
+        outputs = model(imgs)
 
     for i in range(10):
         output = outputs[i].cpu().numpy()
