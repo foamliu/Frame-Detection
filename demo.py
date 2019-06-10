@@ -7,6 +7,7 @@ from torchvision import transforms
 
 from config import im_size, device, pickle_file, num_train
 from data_gen import data_transforms
+from utils import ensure_folder, draw_bboxes
 
 if __name__ == "__main__":
     checkpoint = 'BEST_checkpoint.tar'
@@ -25,16 +26,21 @@ if __name__ == "__main__":
     samples = random.sample(samples, 10)
 
     imgs = torch.zeros([10, 3, im_size, im_size], dtype=torch.float)
+    ensure_folder('images')
 
     for i in range(10):
         sample = samples[i]
         fullpath = sample['fullpath']
-        img = cv.imread(fullpath)
-        img = cv.resize(img, (im_size, im_size))
-        img = img[..., ::-1]  # RGB
+        raw = cv.imread(fullpath)
+        raw = cv.resize(raw, (im_size, im_size))
+        img = raw[..., ::-1]  # RGB
         img = transforms.ToPILImage()(img)
         img = transformer(img)
         imgs[i] = img
+
+        cv.imwrite('images/{}_img.jpg'.format(i), raw)
+        raw = draw_bboxes(raw, sample['pts'])
+        cv.imwrite('images/{}_true.jpg'.format(i), raw)
 
     with torch.no_grad():
         outputs = model(imgs)

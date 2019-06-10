@@ -190,3 +190,9 @@ def get_logger():
     logger.addHandler(handler)
     logger.setLevel(logging.DEBUG)
     return logger
+
+
+def ensure_folder(folder):
+    import os
+    if not os.path.isdir(folder):
+        os.mkdir(folder)
