@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     samples = [item for item in data if not item['is_sample'] and item['pts']]
     samples = samples[num_train:]
-    samples = np.random.sample(10)
+    samples = np.random.sample(samples, 10)
 
     imgs = torch.zeros([10, 3, im_size, im_size], dtype=torch.float)
 
