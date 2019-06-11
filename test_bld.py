@@ -26,9 +26,10 @@ if __name__ == "__main__":
     for i in range(len(file_list)):
         file = file_list[i]
         fullpath = os.path.join('images', file)
-        raw = cv.imread(fullpath)
-        raw = cv.resize(raw, (im_size, im_size))
-        img = raw[..., ::-1]  # RGB
+        print(fullpath)
+        img = cv.imread(fullpath)
+        img = cv.resize(img, (im_size, im_size))
+        img = img[..., ::-1]  # RGB
         img = transforms.ToPILImage()(img)
         img = transformer(img)
         imgs[i] = img
