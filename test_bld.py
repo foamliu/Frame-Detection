@@ -27,12 +27,14 @@ if __name__ == "__main__":
         file = file_list[i]
         fullpath = os.path.join('images', file)
         print(fullpath)
-        img = cv.imread(fullpath)
-        img = cv.resize(img, (im_size, im_size))
-        img = img[..., ::-1]  # RGB
+        raw = cv.imread(fullpath)
+        raw = cv.resize(raw, (im_size, im_size))
+        img = raw[..., ::-1]  # RGB
         img = transforms.ToPILImage()(img)
         img = transformer(img)
         imgs[i] = img
+        cv.imwrite('images/img_bld_{}.jpg'.format(i), raw)
+
 
     with torch.no_grad():
         outputs = model(imgs)
@@ -44,6 +46,6 @@ if __name__ == "__main__":
         print('output: ' + str(output))
         print('output.shape: ' + str(output.shape))
 
-        img = cv.imread('images/test_bld_{}.jpg'.format(i))
+        img = cv.imread('images/img_bld_{}.jpg'.format(i))
         img = draw_bboxes(img, output)
         cv.imwrite('images/out_bld_{}.jpg'.format(i), img)
