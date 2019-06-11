@@ -18,7 +18,7 @@ if __name__ == "__main__":
 
     transformer = data_transforms['valid']
 
-    file_list = ['test_bld_1.jpg', 'test_bld_2.jpg', 'test_bld_3.jpg', 'test_bld_4.jpg']
+    file_list = ['test_bld_0.jpg', 'test_bld_1.jpg', 'test_bld_2.jpg', 'test_bld_3.jpg']
 
     imgs = torch.zeros([4, 3, im_size, im_size], dtype=torch.float)
     ensure_folder('images')
