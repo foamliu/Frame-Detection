@@ -70,6 +70,7 @@ def four_point_transform(image, pts):
     # return the warped image
     return warped
 
+
 if __name__ == '__main__':
     # construct the argument parse and parse the arguments
     ap = argparse.ArgumentParser()
