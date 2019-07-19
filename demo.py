@@ -4,6 +4,7 @@ import random
 import cv2 as cv
 import numpy as np
 import torch
+from models import FrameDetectionModel
 from torchvision import transforms
 
 from config import im_size, device, pickle_file, num_train
@@ -13,8 +14,8 @@ from utils import ensure_folder, draw_bboxes
 if __name__ == "__main__":
     checkpoint = 'BEST_checkpoint.tar'
     checkpoint = torch.load(checkpoint)
-    model = checkpoint['model']
-    model = model.to(device)
+    model = FrameDetectionModel().load_state_dict(checkpoint['model'].state_dict())
+    model = model.to(torch.device('cpu'))
     model.eval()
 
     transformer = data_transforms['valid']
