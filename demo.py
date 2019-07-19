@@ -15,7 +15,7 @@ if __name__ == "__main__":
     checkpoint = 'BEST_checkpoint.tar'
     checkpoint = torch.load(checkpoint)
     # state_dict = checkpoint['model'].resnet.state_dict()
-    model = FrameDetectionModel().module
+    model = checkpoint['model'].module
     # model.resnet.load_state_dict(state_dict)
     model = model.to(torch.device('cpu'))
     # model = checkpoint['model']
