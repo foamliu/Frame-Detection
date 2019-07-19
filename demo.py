@@ -14,8 +14,10 @@ from utils import ensure_folder, draw_bboxes
 if __name__ == "__main__":
     checkpoint = 'BEST_checkpoint.tar'
     checkpoint = torch.load(checkpoint)
-    model = FrameDetectionModel().load_state_dict(checkpoint['model'].state_dict())
-    model = model.to(torch.device('cpu'))
+    # model = FrameDetectionModel().load_state_dict(checkpoint['model'].state_dict())
+    # model = model.to(torch.device('cpu'))
+    model = checkpoint['model']
+    model = model.to(device)
     model.eval()
 
     transformer = data_transforms['valid']
