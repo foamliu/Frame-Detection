@@ -1,6 +1,7 @@
 import pickle
-import numpy as np
+
 import cv2 as cv
+import numpy as np
 from torch.utils.data import Dataset
 from torchvision import transforms
 
@@ -45,7 +46,7 @@ class FrameDetectionDataset(Dataset):
         img = self.transformer(img)
 
         pts = np.array(sample['pts'])
-        pts = pts.reshape((8, ))
+        pts = pts.reshape((8,))
         pts = pts / im_size
         pts = np.clip(pts, 0, 1)
 

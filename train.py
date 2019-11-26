@@ -1,6 +1,6 @@
 import numpy as np
 import torch
-from tensorboardX import SummaryWriter
+from torch.utils.tensorboard import SummaryWriter
 from torch import nn
 
 from config import device, grad_clip, print_freq, loss_ratio
@@ -61,7 +61,7 @@ def train_net(args):
                            epoch=epoch,
                            logger=logger)
 
-        writer.add_scalar('Train_Loss', train_loss, epoch)
+        writer.add_scalar('model/train_loss', train_loss, epoch)
 
         # One epoch's validation
         valid_loss = valid(valid_loader=valid_loader,
@@ -69,7 +69,7 @@ def train_net(args):
                            criterion=criterion,
                            logger=logger)
 
-        writer.add_scalar('Valid_Loss', valid_loss, epoch)
+        writer.add_scalar('model/valid_loss', valid_loss, epoch)
 
         # Check if there was an improvement
         is_best = valid_loss < best_loss

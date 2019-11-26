@@ -8,15 +8,16 @@ from config import device
 class FrameDetectionModel(nn.Module):
     def __init__(self):
         super(FrameDetectionModel, self).__init__()
-        resnet = models.resnet50(pretrained=True)
+        # model = models.resnet50(pretrained=True)
+        model = models.mobilenet_v2(pretrained=True)
         # Remove linear layer (since we're not doing classification)
-        modules = list(resnet.children())[:-1]
-        self.resnet = nn.Sequential(*modules)
-        self.fc = nn.Linear(2048, 8)
+        modules = list(model.children())[:-1]
+        self.features = nn.Sequential(*modules)
+        self.fc = nn.Linear(1280, 8)
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, images):
-        x = self.resnet(images)  # [N, 2048, 1, 1]
+        x = self.features(images)  # [N, 2048, 1, 1]
         x = x.view(-1, 2048)  # [N, 2048]
         x = self.fc(x)
         x = self.sigmoid(x)  # [N, 8]
