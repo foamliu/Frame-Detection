@@ -1,7 +1,8 @@
 import numpy as np
 import torch
-from torch.utils.tensorboard import SummaryWriter
 from torch import nn
+from torch.optim.lr_scheduler import ReduceLROnPlateau
+from torch.utils.tensorboard import SummaryWriter
 
 from config import device, grad_clip, print_freq, loss_ratio
 from data_gen import FrameDetectionDataset
@@ -52,6 +53,8 @@ def train_net(args):
     valid_dataset = FrameDetectionDataset('valid')
     valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=args.batch_size, shuffle=False, num_workers=4)
 
+    scheduler = ReduceLROnPlateau(optimizer, 'min')
+
     # Epochs
     for epoch in range(start_epoch, args.end_epoch):
         # One epoch's training
@@ -71,6 +74,8 @@ def train_net(args):
                            logger=logger)
 
         writer.add_scalar('model/valid_loss', valid_loss, epoch)
+
+        scheduler.step(valid_loss, epoch)
 
         # Check if there was an improvement
         is_best = valid_loss < best_loss
