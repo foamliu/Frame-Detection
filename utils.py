@@ -9,7 +9,7 @@ import torch
 from config import MIN_MATCH_COUNT
 
 # Initiate SIFT detector
-sift = cv.xfeatures2d.SIFT_create()
+sift = cv.xfeatures2d.SURF_create()
 FLANN_INDEX_KDTREE = 0
 index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)
 search_params = dict(checks=50)
