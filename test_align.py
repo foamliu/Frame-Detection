@@ -39,5 +39,5 @@ if __name__ == "__main__":
     print('output: ' + str(output))
     print('output.shape: ' + str(output.shape))
 
-    img = draw_bboxes(raw, output)
+    img = draw_bboxes(raw, output, size=15)
     cv.imwrite('test/result.jpg', img)

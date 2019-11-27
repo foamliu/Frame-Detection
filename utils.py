@@ -22,9 +22,9 @@ def ensure_folder(folder):
         os.mkdir(folder)
 
 
-def draw_bboxes(img, points):
+def draw_bboxes(img, points, size=3):
     for p in points:
-        cv.circle(img, (int(p[0][0]), int(p[0][1])), 3, (0, 255, 0), -1)
+        cv.circle(img, (int(p[0][0]), int(p[0][1])), size, (0, 255, 0), -1)
 
     return img
 
