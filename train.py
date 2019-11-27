@@ -47,7 +47,7 @@ def train_net(args):
     # criterion = nn.L1Loss().to(device)
     criterion = nn.SmoothL1Loss().to(device)
 
-    torch.cudnn.benchmark = True
+    torch.backends.cudnn.benchmark = True
 
     # Custom dataloaders
     train_dataset = FrameDetectionDataset('train')
