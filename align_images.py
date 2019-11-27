@@ -14,5 +14,5 @@ if __name__ == "__main__":
     with open(pickle_file, 'rb') as file:
         data = pickle.load(file)
 
-    samples = [item for item in data if item['pts']]
-    print(samples[0])
+    samples = [item for item in data if not item['is_sample'] and item['pts']]
+    print([samples[0]])
