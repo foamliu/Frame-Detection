@@ -15,10 +15,15 @@ src_folder = '../Image-Matching/data/data/frame/cron20190326/'
 dst_folder = '../Image-Matching/data/cron20190326_aligned/'
 
 if __name__ == "__main__":
-    checkpoint = 'BEST_checkpoint.tar'
-    checkpoint = torch.load(checkpoint)
-    model = checkpoint['model'].module
-    model = model.to(torch.device('cpu'))
+    # checkpoint = 'BEST_checkpoint.tar'
+    # checkpoint = torch.load(checkpoint)
+    # model = checkpoint['model'].module
+    # model = model.to(torch.device('cpu'))
+    # model.eval()
+
+    scripted_model_file = 'framedetector_scripted.pt'
+    model = torch.jit.load(scripted_model_file)
+    model = model.to('cpu')
     model.eval()
 
     transformer = data_transforms['valid']
