@@ -1,8 +1,6 @@
 from torch import nn
-from torchsummary import summary
+from torchscope import scope
 from torchvision import models
-
-from config import device
 
 
 class FrameDetectionModel(nn.Module):
@@ -25,8 +23,5 @@ class FrameDetectionModel(nn.Module):
 
 
 if __name__ == "__main__":
-    from utils import parse_args
-
-    args = parse_args()
-    model = FrameDetectionModel().to(device)
-    summary(model, (3, 224, 224))
+    model = FrameDetectionModel()
+    scope(model, (3, 224, 224))
