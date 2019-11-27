@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
     for p in output:
         p[0][0] = p[0][0] * w
-        p[0][1] = p[0][0] * h
+        p[0][1] = p[0][1] * h
 
     # output = output * im_size
     print('output: ' + str(output))
