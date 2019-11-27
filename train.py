@@ -4,7 +4,7 @@ from torch import nn
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.utils.tensorboard import SummaryWriter
 
-from config import device, grad_clip, print_freq, num_workers
+from config import device, im_size, grad_clip, print_freq, num_workers
 from data_gen import FrameDetectionDataset
 from models import FrameDetectionModel
 from utils import parse_args, save_checkpoint, AverageMeter, clip_gradient, get_logger
@@ -109,7 +109,7 @@ def train(train_loader, model, criterion, optimizer, epoch, logger):
         output = model(img)  # embedding => [N, 8]
 
         # Calculate loss
-        loss = criterion(output, label)
+        loss = criterion(output, label) * im_size
 
         # Back prop.
         optimizer.zero_grad()
@@ -148,7 +148,7 @@ def valid(valid_loader, model, criterion, logger):
         output = model(img)  # embedding => [N, 8]
 
         # Calculate loss
-        loss = criterion(output, label)
+        loss = criterion(output, label) * im_size
 
         # Keep track of metrics
         losses.update(loss.item())
