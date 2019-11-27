@@ -41,3 +41,13 @@ if __name__ == "__main__":
 
     img = draw_bboxes(raw, output, size=15)
     cv.imwrite('test/result.jpg', img)
+
+    im_size = 224
+
+    src_pts = output
+    dst_pts = np.float32([[0, 0], [0, im_size], [im_size, im_size], [im_size, 0]]).reshape(-1, 1, 2)
+    M, _ = cv.findHomography(src_pts, dst_pts, cv.RANSAC, 5.0)
+    print(M)
+
+    img = cv.warpPerspective(raw, M, (im_size, im_size))
+    cv.imwrite('test/aligned.jpg', img)
