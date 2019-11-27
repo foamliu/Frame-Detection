@@ -53,7 +53,7 @@ def train_net(args):
     valid_dataset = FrameDetectionDataset('valid')
     valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=args.batch_size, shuffle=False, num_workers=4)
 
-    scheduler = ReduceLROnPlateau(optimizer, 'min')
+    scheduler = ReduceLROnPlateau(optimizer, mode='min', verbose=True)
 
     # Epochs
     for epoch in range(start_epoch, args.end_epoch):
