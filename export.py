@@ -11,7 +11,7 @@ if __name__ == '__main__':
     model = checkpoint['model'].module
     print(type(model))
 
-    filename = 'corner_detector.pt'
+    filename = 'framedetector.pt'
     print('saving {}...'.format(filename))
     start = time.time()
     torch.save(model.state_dict(), filename)
@@ -23,6 +23,6 @@ if __name__ == '__main__':
     model.load_state_dict(torch.load(filename))
     print('elapsed {} sec'.format(time.time() - start))
 
-    scripted_model_file = 'corner_detector_scripted.pt'
+    scripted_model_file = 'framedetector_scripted.pt'
     print('saving {}...'.format(scripted_model_file))
     torch.jit.save(torch.jit.script(model), scripted_model_file)
