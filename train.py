@@ -4,7 +4,7 @@ from torch import nn
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.utils.tensorboard import SummaryWriter
 
-from config import device, grad_clip, print_freq, loss_ratio
+from config import device, grad_clip, print_freq, num_workers
 from data_gen import FrameDetectionDataset
 from models import FrameDetectionModel
 from utils import parse_args, save_checkpoint, AverageMeter, clip_gradient, get_logger
@@ -51,9 +51,11 @@ def train_net(args):
 
     # Custom dataloaders
     train_dataset = FrameDetectionDataset('train')
-    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=4)
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True,
+                                               num_workers=num_workers)
     valid_dataset = FrameDetectionDataset('valid')
-    valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=args.batch_size, shuffle=False, num_workers=4)
+    valid_loader = torch.utils.data.DataLoader(valid_dataset, batch_size=args.batch_size, shuffle=False,
+                                               num_workers=num_workers)
 
     scheduler = ReduceLROnPlateau(optimizer, mode='min', verbose=True)
 
@@ -108,7 +110,6 @@ def train(train_loader, model, criterion, optimizer, epoch, logger):
 
         # Calculate loss
         loss = criterion(output, label)
-        loss = loss * loss_ratio
 
         # Back prop.
         optimizer.zero_grad()
@@ -126,7 +127,7 @@ def train(train_loader, model, criterion, optimizer, epoch, logger):
         # Print status
         if i % print_freq == 0:
             logger.info('Epoch: [{0}][{1}/{2}]\t'
-                        'Loss {loss.val:.4f} ({loss.avg:.4f})'
+                        'Loss {loss.val:.5f} ({loss.avg:.5f})'
                         .format(epoch, i, len(train_loader), loss=losses))
 
     return losses.avg
@@ -148,13 +149,12 @@ def valid(valid_loader, model, criterion, logger):
 
         # Calculate loss
         loss = criterion(output, label)
-        loss = loss * loss_ratio
 
         # Keep track of metrics
         losses.update(loss.item())
 
     # Print status
-    logger.info('Validation: Loss {0:.4f}\n'.format(losses.avg))
+    logger.info('Validation: Loss {0:.5f}\n'.format(losses.avg))
 
     return losses.avg
 
