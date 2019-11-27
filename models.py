@@ -9,7 +9,7 @@ class FrameDetectionModel(nn.Module):
         # model = models.resnet50(pretrained=True)
         model = models.mobilenet_v2(pretrained=True)
         # Remove linear layer (since we're not doing classification)
-        modules = list(model.children())[:-1]
+        modules = list(model.children())
         self.features = nn.Sequential(*modules)
         self.fc = nn.Linear(1280, 8)
         self.sigmoid = nn.Sigmoid()
