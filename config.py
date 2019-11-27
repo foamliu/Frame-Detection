@@ -15,7 +15,7 @@ MIN_MATCH_COUNT = 10
 loss_ratio = im_size
 
 # Data parameters
-num_samples = 357937  # before filtering: 373471
+num_samples = 363553  # before filtering: 373471
 num_tests = 10000
 num_train = num_samples - num_tests
 DATA_DIR = 'data'
