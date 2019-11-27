@@ -40,4 +40,4 @@ if __name__ == "__main__":
     print('output.shape: ' + str(output.shape))
 
     img = draw_bboxes(raw, output)
-    img = cv.imread('test/result.jpg', img)
+    cv.imwrite('test/result.jpg', img)
