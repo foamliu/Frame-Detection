@@ -64,7 +64,7 @@ if __name__ == "__main__":
         M, _ = cv.findHomography(src_pts, dst_pts, cv.RANSAC, 5.0)
         # print(M)
 
-        img = cv.warpPerspective(raw, M, (im_size, im_size))
+        img = cv.warpPerspective(raw, M, (im_size, im_size), cv.INTER_CUBIC)
 
         dst_path = os.path.join(dst_folder, dir)
         ensure_folder(dst_path)
