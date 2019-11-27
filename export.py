@@ -1,5 +1,5 @@
 import time
-from mobilefacenet import MobileFaceNet
+from models import FrameDetectionModel
 import torch
 
 if __name__ == '__main__':
@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     print('loading {}...'.format(filename))
     start = time.time()
-    model = MobileFaceNet()
+    model = FrameDetectionModel()
     model.load_state_dict(torch.load(filename))
     print('elapsed {} sec'.format(time.time() - start))
 
